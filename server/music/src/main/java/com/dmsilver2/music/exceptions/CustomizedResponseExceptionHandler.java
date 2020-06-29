@@ -13,6 +13,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.dmsilver2.music.artist.ArtistNotFoundException;
+import com.dmsilver2.music.artist.album.AlbumNotFoundException;
+import com.dmsilver2.music.artist.album.song.SongNotFoundException;
 
 @ControllerAdvice
 @RestController
@@ -27,6 +29,20 @@ public class CustomizedResponseExceptionHandler extends ResponseEntityExceptionH
 	
 	@ExceptionHandler(ArtistNotFoundException.class) 
 	public ResponseEntity<Object> handleArtistNotFoundExeption(ArtistNotFoundException ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(AlbumNotFoundException.class) 
+	public ResponseEntity<Object> handleArtistNotFoundExeption(AlbumNotFoundException ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(SongNotFoundException.class) 
+	public ResponseEntity<Object> handleArtistNotFoundExeption(SongNotFoundException ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 		return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
